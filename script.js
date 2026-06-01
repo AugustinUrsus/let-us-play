@@ -11,7 +11,7 @@ const AMAZON_URL = "REPLACE_WITH_AMAZON_URL";
 // 2) Formspree form ID (the part after /f/ in your endpoint).
 //    Sign up free at https://formspree.io, create a form, and paste
 //    its ID here. Leave as-is to keep the form disabled gracefully.
-const FORMSPREE_ID = "FORMSPREE_ID";
+const FORMSPREE_ID = "xojbgqke";
 
 /* ============================================================
    No changes needed below this line.
