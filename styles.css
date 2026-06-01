@@ -140,7 +140,7 @@ body {
 .hero__bg {
   position: absolute;
   inset: 0;
-  background: url("assets/hero.jpg") center 35% / cover no-repeat;
+  background: url("assets/hero.jpg") center 72% / cover no-repeat;
   transform: scale(1.08);
   will-change: transform;
   z-index: -2;
