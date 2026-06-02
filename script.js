@@ -38,10 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const onScroll = () => {
     nav.classList.toggle("is-scrolled", window.scrollY > window.innerHeight * 0.6);
 
-    // Subtle hero parallax
+    // Subtle hero parallax (desktop only — mobile shows the full photo)
     const bg = document.querySelector(".hero__bg");
-    if (bg && window.scrollY < window.innerHeight) {
+    if (bg && window.innerWidth > 680 && window.scrollY < window.innerHeight) {
       bg.style.transform = `scale(1.08) translateY(${window.scrollY * 0.18}px)`;
+    } else if (bg && window.innerWidth <= 680) {
+      bg.style.transform = "";
     }
   };
   window.addEventListener("scroll", onScroll, { passive: true });
