@@ -221,49 +221,46 @@ body {
   100% { opacity: 0; }
 }
 
-/* ---------- Hero: phones show the FULL photo (uncropped) ---------- */
+/* ---------- Hero: phones = poster style (full photo + overlaid title) ---------- */
 @media (max-width: 680px) {
   .hero {
-    justify-content: flex-start;
+    justify-content: flex-start;   /* anchor the title to the top, over the sky */
     padding: 0;
-    /* sunset gradient fills the area behind the headline text */
-    background: linear-gradient(168deg, var(--ocean-deep) 0%, var(--dusk) 48%, var(--coral-dk) 100%);
+    min-height: 0;
+    aspect-ratio: 2112 / 2620;     /* sized to the photo so the whole image shows */
+    /* establish a stacking context so the z-index:-2 photo paints ABOVE this
+       fallback gradient (which only shows if the text runs past the photo) */
+    isolation: isolate;
+    background: linear-gradient(to bottom, var(--dusk), var(--coral-dk));
   }
   .hero__bg {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    /* container matches the photo's exact ratio, so the whole image shows */
-    aspect-ratio: 2112 / 2620;
+    position: absolute;
+    inset: 0;
     background-image: url("assets/hero-full.jpg");
-    background-position: center;
-    background-size: contain;
+    background-position: center top;
+    background-size: contain;      /* full photo, never cropped */
     background-repeat: no-repeat;
     transform: none;
-    z-index: 0;
-    flex: none;
+    z-index: -2;
   }
-  /* keep only a soft top scrim so the nav stays legible over the sky */
+  /* darken the top (sky) so the overlaid title stays legible, fade out by mid-photo */
   .hero__scrim {
-    inset: 0 0 auto 0;
-    height: 96px;
-    z-index: 1;
-    background: linear-gradient(to bottom, rgba(15,35,55,.5), rgba(15,35,55,0));
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom,
+      rgba(8,26,44,.6) 0%, rgba(8,26,44,.24) 30%, rgba(8,26,44,0) 52%);
   }
   .hero__inner {
-    position: relative;
-    z-index: 1;
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     max-width: none;
-    padding: 30px 22px 44px;
+    padding: 86px 22px 22px;       /* clear the fixed nav, sit at the top */
   }
-  .hero__epigraph { color: #ffe9d6; margin: 1.1em auto .2em; }
-  .hero__tagline  { margin: 1em auto 1.6em; }
+  .hero__title    { font-size: clamp(2.5rem, 12.5vw, 3.4rem); }
+  .hero__subtitle { font-size: clamp(1.15rem, 5vw, 1.5rem); }
+  .hero__epigraph { margin: .85em auto .2em; }
+  .hero__tagline  { margin: .75em auto 1.1em; font-size: .97rem; }
   .hero__scroll   { display: none; }
 }
+
 
 /* ---------- Buttons ---------- */
 .btn {
