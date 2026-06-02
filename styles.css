@@ -221,18 +221,18 @@ body {
   100% { opacity: 0; }
 }
 
-/* ---------- Hero: phones = poster style (full photo + overlaid title) ---------- */
+/* ---------- Hero: phones = poster (title over sky, body in a blended block) ---------- */
 @media (max-width: 680px) {
   .hero {
-    display: block;                /* image block defines height; text is overlaid */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;       /* full-width photo + body block */
     position: relative;
     min-height: 0;
     padding: 0;
     overflow: hidden;
   }
-  /* In-flow image block: matches the photo's ratio so the WHOLE photo shows
-     (cover == full image when the box ratio equals the image ratio). This
-     reliably sets the hero's height regardless of how long the text is. */
+  /* full photo, uncropped — the dogs stay fully visible */
   .hero__bg {
     position: relative;
     inset: auto;
@@ -244,32 +244,43 @@ body {
     background-repeat: no-repeat;
     transform: none;
     z-index: 0;
+    flex: none;
+    order: 1;
   }
-  /* darken the top (sky) so the overlaid title stays legible */
+  /* soft top scrim so the nav + title stay legible over the sky */
   .hero__scrim {
-    position: absolute;
     inset: 0 0 auto 0;
-    height: 62%;
+    height: 46%;
     z-index: 1;
     background: linear-gradient(to bottom,
-      rgba(8,26,44,.62) 0%, rgba(8,26,44,.28) 34%, rgba(8,26,44,0) 100%);
+      rgba(10,28,46,.6) 0%, rgba(10,28,46,.22) 45%, rgba(10,28,46,0) 100%);
+    order: 0;
   }
-  /* title/subtitle/etc. overlaid on the top of the photo */
   .hero__inner {
+    display: contents;          /* let head + body place themselves */
+  }
+  /* title + subtitle overlaid on the sky at the very top */
+  .hero__head {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 2;
-    max-width: none;
-    padding: 84px 22px 0;
+    padding: 82px 22px 0;
+  }
+  /* body (pitch + buttons) sits in a block below the photo, blended from
+     the photo's bottom sand tone into dusk so it reads as one poster */
+  .hero__body {
+    order: 2;
+    z-index: 1;
+    padding: 26px 22px 46px;
+    background: linear-gradient(to bottom, #4d4c4a 0%, #403e48 45%, #322f3b 100%);
   }
   .hero__title    { font-size: clamp(2.4rem, 12vw, 3.4rem); }
   .hero__subtitle { font-size: clamp(1.1rem, 4.8vw, 1.5rem); }
-  .hero__epigraph { margin: .7em auto .2em; }
-  .hero__tagline  { margin: .65em auto 1em; font-size: .95rem; }
+  .hero__epigraph { margin: 0 auto .2em; }
+  .hero__tagline  { margin: .8em auto 1.4em; }
   .hero__scroll   { display: none; }
 }
+
 
 
 
