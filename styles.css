@@ -224,42 +224,53 @@ body {
 /* ---------- Hero: phones = poster style (full photo + overlaid title) ---------- */
 @media (max-width: 680px) {
   .hero {
-    justify-content: flex-start;   /* anchor the title to the top, over the sky */
-    padding: 0;
+    display: block;                /* image block defines height; text is overlaid */
+    position: relative;
     min-height: 0;
-    aspect-ratio: 2112 / 2620;     /* sized to the photo so the whole image shows */
-    /* establish a stacking context so the z-index:-2 photo paints ABOVE this
-       fallback gradient (which only shows if the text runs past the photo) */
-    isolation: isolate;
-    background: linear-gradient(to bottom, var(--dusk), var(--coral-dk));
+    padding: 0;
+    overflow: hidden;
   }
+  /* In-flow image block: matches the photo's ratio so the WHOLE photo shows
+     (cover == full image when the box ratio equals the image ratio). This
+     reliably sets the hero's height regardless of how long the text is. */
   .hero__bg {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    aspect-ratio: 2112 / 2620;
     background-image: url("assets/hero-full.jpg");
-    background-position: center top;
-    background-size: contain;      /* full photo, never cropped */
+    background-position: center;
+    background-size: cover;
     background-repeat: no-repeat;
     transform: none;
-    z-index: -2;
+    z-index: 0;
   }
-  /* darken the top (sky) so the overlaid title stays legible, fade out by mid-photo */
+  /* darken the top (sky) so the overlaid title stays legible */
   .hero__scrim {
-    inset: 0;
-    z-index: -1;
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 62%;
+    z-index: 1;
     background: linear-gradient(to bottom,
-      rgba(8,26,44,.6) 0%, rgba(8,26,44,.24) 30%, rgba(8,26,44,0) 52%);
+      rgba(8,26,44,.62) 0%, rgba(8,26,44,.28) 34%, rgba(8,26,44,0) 100%);
   }
+  /* title/subtitle/etc. overlaid on the top of the photo */
   .hero__inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
     max-width: none;
-    padding: 86px 22px 22px;       /* clear the fixed nav, sit at the top */
+    padding: 84px 22px 0;
   }
-  .hero__title    { font-size: clamp(2.5rem, 12.5vw, 3.4rem); }
-  .hero__subtitle { font-size: clamp(1.15rem, 5vw, 1.5rem); }
-  .hero__epigraph { margin: .85em auto .2em; }
-  .hero__tagline  { margin: .75em auto 1.1em; font-size: .97rem; }
+  .hero__title    { font-size: clamp(2.4rem, 12vw, 3.4rem); }
+  .hero__subtitle { font-size: clamp(1.1rem, 4.8vw, 1.5rem); }
+  .hero__epigraph { margin: .7em auto .2em; }
+  .hero__tagline  { margin: .65em auto 1em; font-size: .95rem; }
   .hero__scroll   { display: none; }
 }
+
 
 
 /* ---------- Buttons ---------- */
